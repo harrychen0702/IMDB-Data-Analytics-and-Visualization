@@ -1,0 +1,26 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Search Results
+            </h1>
+        </div>
+    </div>
+</div> 
+
+<div class="container">
+<div ng-repeat="movie in movieList">
+    <div class="row">
+        <div class="col-lg-2">
+          <img ng-src="{{movie.Poster}}" height="150" width="150"> 	
+        </div> 
+        <div class="col-lg-10">
+           <div class="row"><div class="col-lg-10">Title: {{movie.Title}}</div></div>
+           <div class="row"><div class="col-lg-10">Year: {{movie.Year}}</div></div>
+           <div class="row"><div class="col-lg-10">IMDB ID: {{movie.imdbID}}</div></div>
+           <div class="row"><div class="col-lg-10"><button type="button" class="btn btn-primary" ng-click="submit(movie.imdbID)">Explore more</button></div></div>
+        	
+        </div> 	
+    </div>
+    <br>
+</div>	
+</div>

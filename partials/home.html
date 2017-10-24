@@ -1,0 +1,155 @@
+
+<div id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Specialists');"></div>
+            <div class="carousel-caption">
+                <h1>Reduce costs of finishing operations by 65%</h1>
+            </div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Wordlwide');"></div>
+            <div class="carousel-caption">
+                <h1>International Buyer Financing Available</h1>
+            </div>
+        </div>
+        <div class="item">
+            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Since 1910');"></div>
+            <div class="carousel-caption">
+                <h1>Family Owned for Four Generations</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
+
+
+
+<div class="section-colored text-center">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>IMDB analysis </h2>
+                <p>Providing users with huge amount of movie-related data and analysis</p>
+                <hr>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.section-colored -->
+<br>
+<br>
+<br>
+
+
+<!-- 主页电影搜索框 -->
+<div class="section">
+<div class="container">
+    <div class="row">
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+        <div class="input-group">
+
+        <div class="input-group-btn">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{selectedType}}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li ng-repeat="a in types"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>       
+        </ul>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with dropdown button" ng-model="movie_input">
+
+        <div class="input-group-btn"><button type="button" class="btn btn-primary" ng-click="submit_search()">Submit</button></div>
+
+        </div>
+
+      </div>        
+        
+    </div>
+
+    <div class="col-md-4"></div>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>IMDB based movie data analysis</h2>
+                <hr>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+            <div class="col-md-4 col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
+                </a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+    <button ></button>
+
+</div>
+<!-- /.section -->
+
+
+
+
+
+
