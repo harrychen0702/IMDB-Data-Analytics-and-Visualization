@@ -108,16 +108,22 @@
 
 </div>
 
-<!-- $scope.genre=movie_info.Genre;
-    $socpe.language=movie_info.Language;
-    $scope.plot=movie_info.Plot;
-    $socpe.production=movie_info.Production;
-    $socpe.releaseDate=movie_info.Released;
-    $socpe.runtime=movie_info.Runtime;
-    $socpe.website=movie_info.Website;
-    $scope.writer=movie_info.Writer;
-    $scope.imdbRating=movie_info.ImdbRating;
-    $scope.imdbVotes=movie_info.ImdbVotes; -->
+
+<div class="container">
+    <div class="row">
+    <button type="button" class="btn btn-primary" ng-click="getTrailer()">Play trailer</button>
+</div>
+</div>
+
+<div class="container" ng-show="show">
+    <div class="row">
+         <iframe width="420" height="315" ng-src="{{url | trusted}}"></iframe> 
+    </div>
+</div>
+
+<!-- +"?autoplay=1" -->
+
+
 
 
 

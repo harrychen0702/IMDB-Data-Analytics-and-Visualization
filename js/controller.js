@@ -98,33 +98,27 @@ angular.module('IMDB.controllers', [])
     $scope.imdbRating=movie_info.imdbRating;
     $scope.imdbVotes=movie_info.imdbVotes;
     $scope.website=movie_info.Website;
+
+    $scope.movieID=null;
+    $scope.show=false;
+    $scope.url=" ";
+    $scope.getTrailer=function(){
+      var youtube_url="https://www.googleapis.com/youtube/v3/search?key=AIzaSyAXiqxAIiKt00YPN5l7raddnlMIlaITXsE";
+      var name=" "+$scope.title;
+      $http.get(youtube_url+"&"+'type'+"="+"video"+"&"+"part"+"="+"snippet"+"&"+"q"+'='+name+"trailer").success(function (response) {
+            console.log(response.items[0].id.videoId);
+            $scope.movieID=response.items[0].id.videoId;
+            $scope.show=true;
+            $scope.url="https://www.youtube.com/embed/"+$scope.movieID;
+            console.log($scope.url);
+      });
+    }
+
     
 
 
 
-  //  $scope.get_movie_info = function () {
-  //     // console.log($stateParams.movieID);
-  //     // console.log($stateParams.movieTitle);
-  //     // console.log($stateParams.searchType);
-  //     // // console.log("Request sent successfully");
-  //     // var basic_url="http://www.omdbapi.com/?apikey=be508df7&r=json";
-  //     // var input=null;
-  //     // if($stateParams.movieTitle==null){
-  //     //   input=$stateParams.movieID;
-  //     // }
-  //     // else if($stateParams.movieID==null){
-  //     //   input=$stateParams.movieTitle;
-  //     // }
-
-  //     // $http.get(basic_url+"&"+$stateParams.searchType+"="+input).success(function (response) {
-  //     // // console.log(response);
-  //     // // var responseData=JSON.parse(response);
-  //     // // console.log(responseData);
-  //     // console.log(response);
-  //     // });
-
-      
-  // };
+  
 
  
 

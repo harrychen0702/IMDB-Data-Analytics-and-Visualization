@@ -24,6 +24,11 @@ var IMDB = angular.module('IMDB', [
     
 //     .otherwise("/404", {templateUrl: "partials/404.html", controller: "TestCtrl"});
 // }]);
+IMDB.filter('trusted', ['$sce', function ($sce) {
+    return function(url) {
+        return $sce.trustAsResourceUrl(url);
+    };
+}]);
 
 IMDB.config(function($stateProvider, $urlRouterProvider) {
 
