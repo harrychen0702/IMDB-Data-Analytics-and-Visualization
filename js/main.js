@@ -1,6 +1,5 @@
 /**
- * AngularJS Tutorial 1
- * @author Nick Kaye <nick.c.kaye@gmail.com>
+ * @author Harry Chen <harrychen0702@gmail.com>
  */
 
 /**
