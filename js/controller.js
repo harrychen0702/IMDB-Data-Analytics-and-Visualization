@@ -1,4 +1,4 @@
-angular.module('IMDB.controllers', [])
+angular.module('IMDB.controllers', ['ngTable'])
 
 .controller('HomeCtrl', ['$scope','$state','$http',function ($scope,$state,$http) {
    $scope.types=["General Search","By ID","By Title"];
@@ -114,9 +114,6 @@ angular.module('IMDB.controllers', [])
       });
     }
 
-    
-
-
 
   
 
@@ -124,12 +121,70 @@ angular.module('IMDB.controllers', [])
 
 }])
 
+.controller('CountryCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
+   var country_list_url="http://127.0.0.1:8000/country_list";
+   $scope.get_country_list=function(){
+       $http.get(country_list_url).success(function (response) {
+            console.log(response); 
+            $scope.data=response;  
+            $scope.tableParams=new NgTableParams({page: 1,            // show first page
+            count: 25},{counts:[25,50],dataset: $scope.data}); 
+      });
+   };
+
+}])
+
+.controller('ActorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
+   var actor_list_url="http://127.0.0.1:8000/actor_list";
+   $scope.get_actor_list=function(){
+       $http.get(actor_list_url).success(function (response) {
+            console.log(response); 
+            $scope.data=response;  
+            $scope.tableParams=new NgTableParams({page: 1,            // show first page
+            count: 25},{counts:[25,50],dataset: $scope.data}); 
+      });
+   };
+
+}])
+
+.controller('LanguageCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
+   var language_list_url="http://127.0.0.1:8000/language_list";
+   $scope.get_language_list=function(){
+       $http.get(language_list_url).success(function (response) {
+            console.log(response); 
+            $scope.data=response;  
+            $scope.tableParams= new NgTableParams({page: 1,            // show first page
+            count: 25},{counts:[25,50],dataset: $scope.data}); 
+      });
+   };
+
+}])
 
 
-.controller('TestCtrl', function ($scope) {
+.controller('DirectorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
+   var director_list_url="http://127.0.0.1:8000/director_list";
+   $scope.get_director_list=function(){
+       $http.get(director_list_url).success(function (response) {
+            console.log(response); 
+            $scope.data=response;  
+            $scope.tableParams= new NgTableParams({page: 1,            // show first page
+            count: 25},{counts:[25,50],dataset: $scope.data}); 
+      });
+   };
+
+}]) 
+
+
+// For testing purpose only
+.controller('TestCtrl', ['$scope','$http',function ($scope,$http) {
+   var local_url="http://127.0.0.1:8000/language_list";
+   $scope.list=null;
    $scope.test=function(){
-    console.log("hello");
+       $http.get(local_url).success(function (response) {
+            console.log(response);   
+            $scope.list=response;     
+      });
    }
-});
+}]);
 
 

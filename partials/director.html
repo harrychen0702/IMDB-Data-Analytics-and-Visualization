@@ -2,10 +2,31 @@
 
     <div class="row">
 
-        <div class="col-lg-12">
-            <h1 class="page-header">Director
+        <div class="col-lg-12" data-ng-init="get_director_list()">
+            <h1 class="page-header">Directors
             </h1>
         </div>
+
     </div>
+ 
+<!--  "rank": 1,
+        "director": "Eric Notarnicola",
+        "ave_rating": 8.9,
+        "gross_box_office": 0.0,
+        "number": 4 -->
+    <table  ng-table="tableParams" class="table table-condensed table-bordered table-striped" show-filter="true">
+    <tr ng-repeat="directors in $data">
+        <td title="'Id'">
+            {{directors.rank}}</td>
+        <td title="'Director'" >
+            {{directors.director}}</td>
+        <td title="'Rating'" sortable="'ave_rating'">
+            {{directors.ave_rating}}</td>
+        <td title="'Gross'" sortable="'gross_box_office'">
+            {{directors.gross_box_office}}</td>
+        <td title="'Number'" sortable="'number'">
+            {{directors.number}}</td>
+    </tr>
+    </table>
 
 </div>  

@@ -6,7 +6,7 @@
  * Main AngularJS Web Application
  */
 var IMDB = angular.module('IMDB', [
-  'IMDB.controllers','ui.router',
+  'IMDB.controllers','ui.router','ngTable',
 ]);
 
 /**
@@ -61,7 +61,34 @@ IMDB.config(function($stateProvider, $urlRouterProvider) {
             url:'/about',
             templateUrl:'partials/about.html',
             controller:'AboutCtrl'      
+        })
+
+        .state('coountry', {
+            url:'/country',
+            templateUrl:'partials/country.html',
+            controller:'CountryCtrl'      
+        })
+
+        .state('actor', {
+            url:'/actor',
+            templateUrl:'partials/actor.html',
+            controller:'ActorCtrl'      
+        })
+
+        .state('director', {
+            url:'/director',
+            templateUrl:'partials/director.html',
+            controller:'DirectorCtrl'      
+        })
+
+        .state('language', {
+            url:'/languages',
+            templateUrl:'partials/languages.html',
+            controller:'LanguageCtrl'      
         });
+
+
+
 
 
 
