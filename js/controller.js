@@ -86,6 +86,8 @@ angular.module('IMDB.controllers', ['ngTable'])
     $scope.director=movie_info.Director;
     $scope.boxoffice=movie_info.BoxOffice;
     $scope.country=movie_info.Country;
+    $scope.actors=movie_info.Actors;
+    $scope.awards=movie_info.Awards;
     //
     $scope.genre=movie_info.Genre;
     $scope.language=movie_info.Language;
@@ -100,8 +102,14 @@ angular.module('IMDB.controllers', ['ngTable'])
     $scope.website=movie_info.Website;
 
     $scope.movieID=null;
-    $scope.show=false;
+    $scope.show=false;  //预告片
     $scope.url=" ";
+
+
+    $scope.show_d=false; //director
+    $scope.show_a=false; //actor
+    $scope.show_p=false; //production
+
     $scope.getTrailer=function(){
       var youtube_url="https://www.googleapis.com/youtube/v3/search?key=AIzaSyAXiqxAIiKt00YPN5l7raddnlMIlaITXsE";
       var name=" "+$scope.title;
@@ -109,10 +117,96 @@ angular.module('IMDB.controllers', ['ngTable'])
             console.log(response.items[0].id.videoId);
             $scope.movieID=response.items[0].id.videoId;
             $scope.show=true;
+            $scope.show_d=false; //director
+            $scope.show_a=false; //actor
+            $scope.show_p=false; //production
             $scope.url="https://www.youtube.com/embed/"+$scope.movieID;
             console.log($scope.url);
       });
     }
+
+    $scope.backend_url="http://127.0.0.1:8000/";
+    $scope.director_rate=null;
+    $scope.director_gross=null;
+    $scope.production_detail=null;
+    $scope.actor_rdetail=null;
+    $scope.actor_gdetail=null;
+
+    $scope.getdata=function(){
+       var backend_url="http://127.0.0.1:8000/";
+
+       //get director_rate
+       $http.get(backend_url+"director_r/"+$scope.director).success(function (response) {
+            $scope.director_rate=response;
+            console.log($scope.director_rate);
+       }).error(function(data,status){  // handle the 404 case,
+          $scope.director_rate=null;
+          console.log("error returns"+status);
+       });
+
+       // get director_rgross
+       $http.get(backend_url+"director_g/"+$scope.director).success(function (response) {
+            $scope.director_gross=response;
+            console.log($scope.director_gross);
+       }).error(function(data,status){  // handle the 404 case,
+          $scope.director_gross=null;
+          console.log("error returns"+status);
+       });
+
+       // get production company details
+       $http.get(backend_url+"production/"+movie_info.Production).success(function (response) {
+            $scope.production_detail=response;
+            console.log($scope.production_detail);
+       }).error(function(data,status){  // handle the 404 case,
+          $scope.production_detail=null;
+          console.log("error returns"+status);
+       }).finally(function(){
+          // console.log($scope.production_detail);
+       });
+
+       // get actor details by rating
+       var actor_array = $scope.actors.split(',');
+       $http.get(backend_url+"actor_by_rating/"+actor_array[0]).success(function (response) {
+            $scope.actor_rdetail=response;
+            console.log($scope.actor_rdetail);
+       }).error(function(data,status){  // handle the 404 case,
+          $scope.actor_rdetail=null;
+          console.log("error returns"+status);
+       });
+
+       $http.get(backend_url+"actor_by_gross/"+actor_array[0]).success(function (response) {
+            $scope.actor_gdetail=response;
+            console.log($scope.actor_gdetail);
+       }).error(function(data,status){  // handle the 404 case,
+          $scope.actor_gdetail=null;
+          console.log("error returns"+status);
+       });
+
+
+
+    }  // End of get data function
+
+    $scope.show_director=function(){
+      $scope.show_d=true;
+      $scope.show=false;
+      $scope.show_a=false; //actor
+      $scope.show_p=false;
+    }
+
+    $scope.show_production=function(){
+      $scope.show_d=false;
+      $scope.show=false;
+      $scope.show_a=false; //actor
+      $scope.show_p=true;
+    }
+
+    $scope.show_actor=function(){
+      $scope.show_d=false;
+      $scope.show=false;
+      $scope.show_a=true; //actor
+      $scope.show_p=false;
+    }
+
 
 
   

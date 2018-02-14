@@ -119,6 +119,10 @@ body {
     font-style: italic;
 }
 
+.s_div {
+    height: 300px;
+}
+
 /* Footer Styles */
 footer {
     margin: 50px 0;

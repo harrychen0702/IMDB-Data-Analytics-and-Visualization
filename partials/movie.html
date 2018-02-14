@@ -3,132 +3,174 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <h1 class="page-header">Movie
-            </h1>
-            <!-- <ol class="breadcrumb">
-                <li><a href="../index.html">Home</a>
-                </li>
-                <li class="active">Movie</li>
-            </ol> -->
-
+            <h1 class="page-header">{{title}}</h1>
         </div>
 
     </div>
-
-
 </div>  
 
 <div class="container">
 
 <div class="row">
-<div class="=col-lg-4">
-    <img ng-src="{{poster_url}}">
-</div>
-</div>
-
-<div class="row">
 <div class="col-lg-4">
-    <h3>
-            Title: {{title}}
-    </h3> 
-</div>
-</div>
-    
- 
-</div>
-<!-- /.container -->
+    <img ng-src="{{poster_url}}" height="530" width="360">
+</div >
 
-<div class="container">
+<div class="col-lg-8">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Director: {{director}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
+            <p>Actors: {{actors}}</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-8">
             <p>Boxoffice: {{boxoffice}}</p>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
+            <p>Awards: {{awards}}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
             <p>Country: {{country}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Genres: {{genre}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Language: {{language}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Plot: {{plot}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Production: {{production}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Release Date: {{releaseDate}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Runtime: {{runtime}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Writer: {{writer}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>IMDB rating: {{imdbRating}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>IMDB votes: {{imdbVotes}}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <p>Movie website: <a>{{website}}</a></p>
         </div>
     </div>
-
-
 </div>
 
 
+</div> <!-- row的 -->
+
+
+<br>
+
+<!-- 
+导航栏 -->
+<div class="container" data-ng-init="getTrailer()" >
+<div class="row" data-ng-init="getdata()">
+<nav class="navbar navbar-default" role="navigation">
+        <ul class="nav navbar-nav">
+            <li><a href="" ng-click="getTrailer()">Play trailer</a></li>
+            <!-- <li><a href="" ng-click="getdata()">Get data analysis</a></li>   --> 
+            <li><a href="" ng-click="show_director()">Director</a></li>  
+            <li><a href="" ng-click="show_production()">Production</a></li>  
+            <li><a href="" ng-click="show_actor()">Actor</a></li>    
+        </ul>
+</nav>
+</div>
+</div>
+<!-- 结束导航栏 -->
+
+<!-- 预告片 -->
+<div class="s_div" >
 <div class="container">
-    <div class="row">
-    <button type="button" class="btn btn-primary" ng-click="getTrailer()">Play trailer</button>
-</div>
+<div class="row" ng-show="show">
+        <iframe width="420" height="315" ng-src="{{url | trusted}}"></iframe>          
 </div>
 
-<div class="container" ng-show="show">
-    <div class="row">
-         <iframe width="420" height="315" ng-src="{{url | trusted}}"></iframe> 
+<!-- 结束预告片 -->
+
+<!-- Director part -->
+
+    <div class="row" ng-show="show_d"> 
+        <p>Director: {{director_rate.director}}</p>
+        <p>Number of movies: {{director_gross.number}}</p>
+        <p>Gross_box_office: {{director_gross.gross_box_office}}</p>
+        <p>Rank based on gross: {{director_gross.rank}}</p>
+        <p>Average rating of mhis movies: {{director_rate.ave_rating}}</p>
+        <p>Rank based on rating: {{director_rate.rank}}</p>
     </div>
+
+
+
+<!-- Production part -->
+
+    <div class="row" ng-show="show_p">
+        <p>Production: {{production_detail.production}} </p>
+        <p>Number of movies: {{production_detail.number}}</p>
+        <p>Average gross of its movies: {{production_detail.ave_gross}}</p>
+        <p>Average raitng of its movies: {{production_detail.ave_rating}}</p>
+        <p>Total gross: {{production_detail.gross_box_office}}</p>
+    </div>
+    
+    <div class="row" ng-show="show_a">
+        <p>Actor: {{actor_rdetail.actor}}</p>
+        <p>Number of movies: {{actor_rdetail.number}}</p>
+        <p>Average rating of movies: {{actor_rdetail.ave_rating}}</p>
+        <p>Gross_box_office: {{actor_rdetail.gross_box_office}}</p>
+        <p>Rank based on rating: {{actor_rdetail.rank}}</p>
+        <p>Rank based on gross: {{actor_gdetail.rank}}</p>     
+    </div>
+
+</div>
 </div>
 
-<!-- +"?autoplay=1" -->
 
 
 
 
 
-
-
+</div>  <!-- 最外层的div container -->
 
 
 
