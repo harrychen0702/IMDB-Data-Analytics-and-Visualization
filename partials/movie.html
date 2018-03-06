@@ -100,7 +100,7 @@
 
 
 </div> <!-- row的 -->
-
+</div>
 
 <br>
 
@@ -122,55 +122,241 @@
 <!-- 结束导航栏 -->
 
 <!-- 预告片 -->
-<div class="s_div" >
-<div class="container">
-<div class="row" ng-show="show">
+<div class="s_div">
+<div class="container" ng-show="show">
+<div class="row">
         <iframe width="420" height="315" ng-src="{{url | trusted}}"></iframe>          
+</div>
 </div>
 
 <!-- 结束预告片 -->
 
 <!-- Director part -->
-
-    <div class="row" ng-show="show_d"> 
-        <p>Director: {{director_rate.director}}</p>
-        <p>Number of movies: {{director_gross.number}}</p>
-        <p>Gross_box_office: {{director_gross.gross_box_office}}</p>
-        <p>Rank based on gross: {{director_gross.rank}}</p>
-        <p>Average rating of mhis movies: {{director_rate.ave_rating}}</p>
-        <p>Rank based on rating: {{director_rate.rank}}</p>
+<div class="container" ng-show="d_flag">
+<div class="row" ng-show="show_d"> 
+<label> <br/><br/></label>
+    <div class="col-lg-6">
+    <label> Rating of past movies (score out of 10)<br/><br/></label>
+        <canvas id="line" class="chart chart-line" chart-data="movie_data1" chart-labels="movie_labels1" chart-series="movie_series1" chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>      
     </div>
+    <div class="col-lg-6" >
+    <label> Box office of past movies (in $million)<br/><br/></label>
+        <canvas id="line" class="chart chart-line" chart-data="movie_data2" chart-labels="movie_labels2" chart-series="movie_series2" chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>      
+    </div>
+</div>  <!-- end of row -->
+<br>
+<div class="row">
+    <div class="col-lg-4" ng-show="show_d">
+        <p><label>Director</label>: {{director_rate.director}}</p>
+        <p><label>Number of movies directored</label>: {{director_gross.number}}</p>
+        <p><label>Box_office accumulated</label>: ${{director_gross.gross_box_office}}</p>
+        <p><label>Rank based on gross </label>: {{director_gross.rank}} out of 4069 directors</p>
+        <p><label>Average rating of his movies</label>: {{director_rate.ave_rating}}/10</p>
+        <p><label>Rank based on rating </label>: {{director_rate.rank}} out of 4069 directors</p>
+    </div>
+    <div class="col-lg-8" ng-show="show_d">
+        <label>Other popular movies of this director (Click the pic to explore more)</label>
+        <div class="row" >
+            <div class="col-lg-2" ng-repeat="movie in movie_to_show">
+                <!-- <div class="row">Title: {{movie.title}}</div>
+                <div class="row">Year: {{movie.year}}</div>
+               <div class="row">IMDB ID: {{movie.id}}</div> -->
+               <img ng-src="{{movie.Poster}}" height="120" width="120" ng-click="submit(movie.imdbID)">
+               <!-- <p>Title: {{movie.Title}}</p> -->
+               <p>Year: {{movie.Year}}</p>
+               <p>Rating: {{movie.imdbRating}}</p>
+               <p>Box_office: {{movie.BoxOffice}}</p>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+</div> <!-- end of container -->
+
+<!-- When can not find director -->
+<div class="container" ng-show="!d_flag && !show_p && !show && !show_a">
+    <div class="row">
+    <p>Sorry can not find this director</p>
+        
+    </div>
+</div>
+    
 
 
 
 <!-- Production part -->
+<div class="container" ng-show="show_p && p_flag">
+<div class="row" >
+    <div class="col-lg-5">
+        <label>Number of movies produced</label>
+        <canvas id="line" class="chart chart-line" chart-data="year_production_number" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+    </div>
 
-    <div class="row" ng-show="show_p">
+    <div class="col-lg-5">
+        <label>Sum of box office gained by {{production_detail.production}} in the past (in $million)</label>
+        <canvas id="line" class="chart chart-line" chart-data="year_production_gross" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+    </div>
+
+</div>
+<div class="row">
+    
+    <div class="col-lg-5">
+    <label> Average box office per movie in each year ($million)</label>
+        <canvas id="line" class="chart chart-line" chart-data="comboavegross" chart-series='series1' chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+    </div>
+    <div class="col-lg-5">
+    <label> Average rating per movie in each year (rate out of 10)</label>
+        <canvas id="line" class="chart chart-line" chart-data="comboaverate" chart-series='series1' chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+    </div>
+</div> 
+<div class="row">
+    <div class="col-lg-3">
+    <span class="border border-primary">
         <p>Production: {{production_detail.production}} </p>
         <p>Number of movies: {{production_detail.number}}</p>
         <p>Average gross of its movies: {{production_detail.ave_gross}}</p>
-        <p>Average raitng of its movies: {{production_detail.ave_rating}}</p>
-        <p>Total gross: {{production_detail.gross_box_office}}</p>
+        <p>Average raitng of its movies: {{f_rate}}/10</p>
+        <p>Total gross: ${{production_detail.gross_box_office}}</p>
+    </span>
+    </div>
+
+    <div class="col-lg-8" >
+        <label>Other popular movies of this production (Click the pic to explore more)</label>
+        <div class="row" >
+            <div class="col-lg-2" ng-repeat="movie in movie_to_show_p">
+               <img ng-src="{{movie.Poster}}" height="120" width="120" ng-click="submit(movie.imdbID)">
+               <p>Year: {{movie.Year}}</p>
+               <p>Rating: {{movie.imdbRating}}</p>
+               <p>Box_office: {{movie.BoxOffice}}</p>
+            </div>
+            
+        </div>
     </div>
     
-    <div class="row" ng-show="show_a">
-        <p>Actor: {{actor_rdetail.actor}}</p>
+</div> 
+</div>
+
+<!-- 当production找不到的时候 -->
+
+<div class="container" ng-show="!p_flag && !show_p && !show_d && !show && !show_a">
+    <div class="row">
+        <p>Sorry, can not find this production</p>
+    </div>
+</div>
+
+
+
+
+
+<!-- Actor part -->
+<div class="container" ng-show="show_a">
+    <div class="row">
+    <div class="col-lg-4" ng-show="a1_flag">
+        <p>Actor1: {{actor_rdetail.actor}}</p>
         <p>Number of movies: {{actor_rdetail.number}}</p>
         <p>Average rating of movies: {{actor_rdetail.ave_rating}}</p>
         <p>Gross_box_office: {{actor_rdetail.gross_box_office}}</p>
         <p>Rank based on rating: {{actor_rdetail.rank}}</p>
         <p>Rank based on gross: {{actor_gdetail.rank}}</p>     
+    </div> 
+    <!-- <div class="col-lg-2" ng-show="!a1_flag">No info about actor1</div> -->
+
+    <div class="col-lg-4" ng-show="a2_flag">
+        <p>Actor2: {{actor2_rdetail.actor}}</p>
+        <p>Number of movies: {{actor2_rdetail.number}}</p>
+        <p>Average rating of movies: {{actor2_rdetail.ave_rating}}</p>
+        <p>Gross_box_office: {{actor2_rdetail.gross_box_office}}</p>   
+        <p>Average box office: {{actor2_rdetail.ave_gross}}</p>
+    </div> 
+    <!-- <div class="col-lg-2" ng-show="!a2_flag"><label>No info about actor2</label></div> -->
+    <div class="col-lg-4" ng-show="a3_flag">
+        <p>Actor3: {{actor3_rdetail.actor}}</p>
+        <p>Number of movies: {{actor3_rdetail.number}}</p>
+        <p>Average rating of movies: {{actor3_rdetail.ave_rating}}</p>
+        <p>Gross_box_office: {{actor3_rdetail.gross_box_office}}</p>   
+        <p>Average box office: {{actor3_rdetail.ave_gross}}</p>
+    </div> 
+    <!-- <div class="col-lg-2" ng-show="!a3_flag">No info about actor3</div> -->
+    </div>
+    <br>
+
+    <div class="row" >  <!-- 画每个actor rating的图 -->
+        <div class="col-lg-4" ng-show="a1_flag">
+        <label> Average rating per movie for actor2</label>
+        <canvas id="line" class="chart chart-line" chart-data="movie_dataa1" chart-labels="movie_labelsa1"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+
+        <div class="col-lg-4" ng-show="a2_flag">
+        <label> Average rating per movie for actor2</label>
+        <canvas id="line" class="chart chart-line" chart-data="movie_dataac21" chart-labels="movie_labelac21"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+
+        <div class="col-lg-4" ng-show="a3_flag">
+        <label> Average rating per movie for actor3</label>
+        <canvas id="line" class="chart chart-line" chart-data="movie_dataac31" chart-labels="movie_labelac31"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-lg-4" ng-show="a1_flag">
+            <label> Boxoffice of movie for actor1 (in $million)</label>
+            <p>NB: No graph if gross=0</p>
+            <canvas id="line" class="chart chart-line" chart-data="movie_dataa2" chart-labels="movie_labelsa2"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+
+        <div class="col-lg-4" ng-show="a2_flag">
+            <label> Boxoffice of movie for actor2 (in $million)</label>
+            <p>NB: No graph if gross=0</p>
+            <canvas id="line" class="chart chart-line" chart-data="movie_dataac22" chart-labels="movie_labelac22"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+
+        <div class="col-lg-4" ng-show="a3_flag">
+            <label> Boxoffice of movie for actor3 (in $million)</label>
+            <p>NB: No graph if gross=0</p>
+            <canvas id="line" class="chart chart-line" chart-data="movie_dataac32" chart-labels="movie_labelac32"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        </canvas>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-8" >
+        <label>Other popular movies of those actors (Click the pic to explore more)</label>
+        <div class="row" >
+            <div class="col-lg-2" ng-repeat="movie in movie_to_show_a">
+               <img ng-src="{{movie.Poster}}" height="120" width="120" ng-click="submit(movie.imdbID)">
+               <p>Year: {{movie.Year}}</p>
+               <p>Rating: {{movie.imdbRating}}</p>
+               <p>Box_office: {{movie.BoxOffice}}</p>
+            </div>
+            
+        </div>
+    </div>
     </div>
 
-</div>
-</div>
+
+</div> 
+    
 
 
 
 
 
 
-</div>  <!-- 最外层的div container -->
 
 
 
