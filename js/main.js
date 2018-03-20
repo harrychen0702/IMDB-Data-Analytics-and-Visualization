@@ -51,7 +51,7 @@ IMDB.config(function($stateProvider, $urlRouterProvider) {
 
         .state('search_result',{
             url:'/search_result',
-            templateUrl:'partials/search_result.html',
+            templateUrl:'partials/Search_result.html',
             params:{movie_list:null},
             controller:'search_resultCtrl'
         })
