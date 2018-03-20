@@ -51,40 +51,11 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
     }  // End of submit_search()
 
 
-    // Deal with genre_occurences csv file
-    $scope.processData = function(allText) {
-        // split content based on new line
-        var allTextLines = allText.split(/\r\n|\n/);
-        var headers = allTextLines[0].split(',');
-        var lines = [];
-
-        for ( var i = 0; i < allTextLines.length; i++) {
-              // split content based on comma
-              var data = allTextLines[i].split(',');
-              if (data.length == headers.length) {
-                 var tarr = [];
-                 for ( var j = 0; j < headers.length; j++) {
-                     tarr.push(data[j]);
-                 }
-                 lines.push(tarr);
-              }
-        }
-
-        $scope.genre_occurence = lines;
-
-        console.log($scope.genre_occurence);
-    };
-
-    $scope.readCSV = function(year) {
-        // http get request to read CSV file content
-        var path="../Cache_data/genre_csv/"+year+".csv";
-        console.log(year);
-        $http.get(path).success($scope.processData);    
-    };
 
 
 
-    var local_host="http://127.0.0.1:8000/";
+    // var local_host="http://127.0.0.1:8000/";
+    var local_host="http://51.145.25.169:8001/";
     // worddata
 
     $scope.helper=function(array){
@@ -409,6 +380,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
     $scope.show_a=false; //actor
     $scope.show_p=false; //production
 
+    $scope.colors=['#803690', '#FDB45C', '#DCDCDC', '#46BFBD', '#00ADF9', '#949FB1', '#4D5360'];
+
     $scope.getTrailer=function(){
       var youtube_url="https://www.googleapis.com/youtube/v3/search?key=AIzaSyAXiqxAIiKt00YPN5l7raddnlMIlaITXsE";
       var name=" "+$scope.title;
@@ -419,12 +392,15 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
             $scope.show_d=false; //director
             $scope.show_a=false; //actor
             $scope.show_p=false; //production
+            $scope.show_g=false;
+            $scope.show_m=false;
             $scope.url="https://www.youtube.com/embed/"+$scope.movieID;
             console.log($scope.url);
       });
     }
 
-    $scope.backend_url="http://127.0.0.1:8000/";
+    // $scope.backend_url="http://127.0.0.1:8000/";
+    $scope.backend_url="http://51.145.25.169:8001/";
     $scope.director_rate=null;
     $scope.director_gross=null;
     $scope.production_detail=null;
@@ -443,9 +419,56 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
     $scope.a2_flag=true;
     $scope.a3_flag=true;
 
+    // Deal with genre_occurences csv file
+    $scope.processData = function(allText) {
+        // split content based on new line
+        var allTextLines = allText.split(/\r\n|\n/);
+        var headers = allTextLines[0].split(',');
+        var lines = [];
+        for ( var i = 0; i < allTextLines.length; i++) {
+              // split content based on comma
+              var data = allTextLines[i].split(',');
+              if (data.length == headers.length) {
+                 var tarr = [];
+                 for ( var j = 0; j < headers.length; j++) {
+                     tarr.push(data[j]);
+                 }
+                 lines.push(tarr);
+              }
+        }
+
+        $scope.genre_summary = lines;
+        console.log($scope.genre_summary);
+      for(var i=1;i<$scope.genre_summary.length;i++){
+        $scope.genres.push($scope.genre_summary[i][0]);
+        $scope.genre_box_office.push($scope.genre_summary[i][1]/1000000);
+        // console.log(typeof($scope.genre_summary[i][2]));
+        $scope.genre_ave_rating.push(parseFloat(parseFloat($scope.genre_summary[i][2]).toFixed(2)));
+        $scope.genre_occurence.push($scope.genre_summary[i][3]);
+      }
+      console.log($scope.genres);
+      console.log($scope.genre_box_office);
+      console.log($scope.genre_ave_rating);
+      console.log($scope.genre_occurence);
+      console.log($scope.current_movie_genre);
+      $scope.series_occurence=['Occurences'];
+      $scope.series_box_office=['Total box office'];
+      $scope.series_rating=['Average rating'];
+
+    };
+
+    $scope.readCSV = function(year) {
+        // http get request to read CSV file content
+        var path="../Cache_data/genre_csv/"+year+".csv";
+        console.log(year);
+        $http.get(path).success($scope.processData);    
+    };
+
+
 
     $scope.getdata=function(){
-       var backend_url="http://127.0.0.1:8000/";
+       // var backend_url="http://127.0.0.1:8000/";
+       var backend_url="http://51.145.25.169:8001/";
 
        //get director_rate
        $http.get(backend_url+"director_r/"+$scope.director).success(function (response) {
@@ -531,6 +554,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
        }).error(function(data,status){  // handle the 404 case,
           $scope.production_detail=null;
           $scope.p_flag=false;
+          $scope.f_rate=0;
           console.log("error returns"+status);
        }).finally(function(){
           // console.log($scope.production_detail);
@@ -587,7 +611,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
             $scope.comboaverate=[];
             $scope.comboaverate[0]=$scope.year_production_averating;
             $scope.comboaverate[1]=$scope.year_averating;
-            $scope.series1=[$scope.production,'All movies'];
+            $scope.series1=[$scope.production,'All movies average'];
 
             $scope.comboavegross=[];
             $scope.comboavegross[0]=$scope.year_production_avegross;
@@ -732,12 +756,12 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
             console.log($scope.movie_list_a2);
             // console.log($scope.movie_list_d.length);
             for(var i=0;i<$scope.movie_list_a2.length;i++){
-              console.log($scope.movie_list_a2[i].year);
+              // console.log($scope.movie_list_a2[i].year);
               $scope.movie_labelac21[i]=$scope.movie_list_a2[i].year;
               $scope.movie_dataac21[i]=$scope.movie_list_a2[i].rating;
             }
-            console.log($scope.movie_labelac21);
-            console.log($scope.movie_dataac21);
+            // console.log($scope.movie_labelac21);
+            // console.log($scope.movie_dataac21);
             var index=0;
             for(var j=0;j<$scope.movie_list_a2.length;j++){
               if($scope.movie_list_a2[j].boxoffice!=0){
@@ -783,12 +807,12 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
             console.log($scope.movie_list_a3);
             // console.log($scope.movie_list_d.length);
             for(var i=0;i<$scope.movie_list_a3.length;i++){
-              console.log($scope.movie_list_a3[i].year);
+              // console.log($scope.movie_list_a3[i].year);
               $scope.movie_labelac31[i]=$scope.movie_list_a3[i].year;
               $scope.movie_dataac31[i]=$scope.movie_list_a3[i].rating;
             }
-            console.log($scope.movie_labelac31);
-            console.log($scope.movie_dataac31);
+            // console.log($scope.movie_labelac31);
+            // console.log($scope.movie_dataac31);
             var index=0;
             for(var j=0;j<$scope.movie_list_a3.length;j++){
               if($scope.movie_list_a3[j].boxoffice!=0){
@@ -807,9 +831,30 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 
 
+      //Genres part
+      $scope.year=$scope.releaseDate.split(/[ ,]+/)[2];
+      $scope.readCSV($scope.year);
+      $scope.current_movie_genre=$scope.genre.split(',');
+      $scope.genres=[];
+      $scope.genre_box_office=[];
+      $scope.genre_occurence=[];
+      $scope.genre_ave_rating=[];
+      
+
+
 
 
     }  // End of get data function
+
+    // $scope.genres_init=function(){
+      
+    // }
+
+    
+
+
+
+
     $scope.submit=function(imdb_id){
           // console.log(imdb_id);
           $http.get("http://www.omdbapi.com/?apikey=be508df7&r=json"+"&"+"i"+"="+imdb_id).success(function (response) {
@@ -819,13 +864,15 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
             // console.log(movie_obj.Title);
             $state.go('movie',{movie_object:movie_obj});
           });
-   }
+    }
 
     $scope.show_director=function(){
       $scope.show_d=true;
       $scope.show=false;
       $scope.show_a=false; //actor
       $scope.show_p=false;
+      $scope.show_g=false;
+      $scope.show_m=false;
     }
 
     $scope.show_production=function(){
@@ -833,6 +880,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
       $scope.show=false;
       $scope.show_a=false; //actor
       $scope.show_p=true;
+      $scope.show_g=false;
+      $scope.show_m=false;
     }
 
     $scope.show_actor=function(){
@@ -840,6 +889,136 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
       $scope.show=false;
       $scope.show_a=true; //actor
       $scope.show_p=false;
+      $scope.show_g=false;
+      $scope.show_m=false;
+    }
+
+    $scope.show_genre=function(){
+      $scope.show_d=false;
+      $scope.show=false;
+      $scope.show_a=false; //actor
+      $scope.show_p=false;
+      $scope.show_g=true;
+      $scope.show_m=false;
+
+    }
+
+    $scope.show_movie_summary=function(){
+      $scope.show_d=false;
+      $scope.show=false;
+      $scope.show_a=false; //actor
+      $scope.show_p=false;
+      $scope.show_g=false;
+      $scope.show_m=true;
+
+      $scope.summary_data=[];
+      $scope.summary_labels=[];
+
+      //导演得分
+      if($scope.director_gross !=null || $scope.director_rate!=null){
+        var director_rank=Math.min($scope.director_gross.rank,$scope.director_rate.rank);
+        $scope.director_score=(1-director_rank/4069)*100;
+        $scope.director_score=$scope.director_score.toFixed(2);
+        console.log($scope.director_score);
+      }else{
+        $scope.director_score=0;
+      }
+      
+
+      //出品商得分
+      $scope.production_score=10*$scope.f_rate;
+      console.log($scope.production_score);
+
+      //演员得分
+      if($scope.actor_rdetail!=null || $scope.actor_gdetail!=null){
+        var actors_rank=Math.min($scope.actor_rdetail.rank,$scope.actor_gdetail.rank);
+        $scope.actors_score=(1-actors_rank/20000)*100;
+        $scope.actors_score=$scope.actors_score.toFixed(2);
+        console.log($scope.actors_score);
+      }
+      else{
+        $scope.actors_score=0;
+      }
+
+      //Genre 得分
+      //get index first
+      var index_set=[];
+      console.log($scope.current_movie_genre);
+      //Trim the strings in array
+      for(var u=0;u<$scope.current_movie_genre.length;u++){
+        $scope.current_movie_genre[u]=$scope.current_movie_genre[u].trim();
+      }
+      console.log($scope.genre_summary);
+      for(var i=0;i<$scope.current_movie_genre.length;i++){
+        for(var j=0;j<$scope.genre_summary.length;j++){
+          if($scope.current_movie_genre[i]==$scope.genre_summary[j][0]){
+            index_set.push(j);
+          }
+        }
+      }
+      console.log(index_set);
+      //start counting
+      var total_number_of_genres=$scope.genre_summary.length;
+      //get highest gross among current genres list
+      var highest_gross=$scope.genre_box_office[index_set[0]];
+      for(var q=1;q<$scope.current_movie_genre.length;q++){
+        if($scope.genre_box_office[index_set[q]]>highest_gross){
+          highest_gross=$scope.genre_box_office[index_set[q]];
+        }
+      }
+      var gross_count=0;
+      for(var w=0;w<$scope.genre_box_office.length;w++){
+        if($scope.genre_box_office[w]>highest_gross){
+          gross_count++;
+        }
+      }
+      $scope.gross_rank=gross_count+1;
+      console.log($scope.gross_rank);
+      $scope.genre_score=(1-(($scope.gross_rank)/total_number_of_genres))*100;
+      $scope.genre_score=$scope.genre_score.toFixed(2);
+      console.log($scope.genre_score);
+
+      //IMDB 得分
+      if($scope.imdbRating!=null){
+        $scope.imdb_score=10*$scope.imdbRating;
+      }else{
+        $scope.imdb_score=0;
+      }
+      console.log($scope.imdb_score);
+
+      $scope.summary_data=[[$scope.director_score,$scope.production_score,$scope.actors_score,$scope.genre_score,$scope.imdb_score],[50,50,50,50,50]];
+      $scope.summary_labels=['Director','Production','Actors','Genre','IMDB_Score'];
+      $scope.summary_series=['The movie','Average'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -851,7 +1030,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 }])
 
 .controller('CountryCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
-   var country_list_url="http://127.0.0.1:8000/country_list";
+   // var country_list_url="http://127.0.0.1:8000/country_list";
+   var country_list_url="http://51.145.25.169:8001/country_list";
    $scope.get_country_list=function(){
        $http.get(country_list_url).success(function (response) {
             console.log(response); 
@@ -864,7 +1044,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 }])
 
 .controller('ActorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
-   var actor_list_url="http://127.0.0.1:8000/actor_list";
+   // var actor_list_url="http://127.0.0.1:8000/actor_list";
+   var actor_list_url="http://51.145.25.169:8001/actor_list";
    $scope.get_actor_list=function(){
        $http.get(actor_list_url).success(function (response) {
             console.log(response); 
@@ -877,7 +1058,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 }])
 
 .controller('LanguageCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
-   var language_list_url="http://127.0.0.1:8000/language_list";
+   // var language_list_url="http://127.0.0.1:8000/language_list";
+   var language_list_url="http://51.145.25.169:8001/language_list";
    $scope.get_language_list=function(){
        $http.get(language_list_url).success(function (response) {
             console.log(response); 
@@ -891,7 +1073,9 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 
 .controller('DirectorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
-   var director_list_url="http://127.0.0.1:8000/director_list";
+   // var director_list_url="http://127.0.0.1:8000/director_list";
+   var director_list_url="http://51.145.25.169:8001/director_list";
+
    $scope.get_director_list=function(){
        $http.get(director_list_url).success(function (response) {
             console.log(response); 
@@ -906,7 +1090,8 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 // For testing purpose only
 .controller('TestCtrl', ['$scope','$http',function ($scope,$http) {
-   var local_url="http://127.0.0.1:8000/language_list";
+   // var local_url="http://127.0.0.1:8000/language_list";
+   var local_url="http://51.145.25.169:8001/language_list";
    $scope.list=null;
    $scope.test=function(){
        $http.get(local_url).success(function (response) {

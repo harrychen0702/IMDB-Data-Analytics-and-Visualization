@@ -1,4 +1,5 @@
-Comedy,2
-Documentary,5
-Fantasy,1
-Short,9
+genre,boxoffice,rating,0
+Comedy,0.0,5.5,2
+Documentary,0.0,4.76,5
+Fantasy,0.0,6.3,1
+Short,0.0,5.23333333333,9

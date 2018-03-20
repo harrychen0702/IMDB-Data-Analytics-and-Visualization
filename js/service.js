@@ -529,7 +529,8 @@ return function (countryName) {
 
 
 .factory('country_helper',['$http',function($http){
-    var local_host="http://127.0.0.1:8000/";
+    // var local_host="http://127.0.0.1:8000/";
+    var local_host="http://51.145.25.169:8001/";
     var getData = function() {
         // Angular $http() and then() both return promises themselves 
         return $http({method:"GET", url:local_host+"country_list/"}).then(function(result){
