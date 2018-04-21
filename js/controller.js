@@ -55,7 +55,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 
     // var local_host="http://127.0.0.1:8000/";
-    var local_host="http://51.145.25.169:8001/";
+    var local_host="http://51.145.42.8:8001/";
     // worddata
 
     $scope.helper=function(array){
@@ -400,7 +400,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
     }
 
     // $scope.backend_url="http://127.0.0.1:8000/";
-    $scope.backend_url="http://51.145.25.169:8001/";
+    $scope.backend_url="http://51.145.42.8:8001/";
     $scope.director_rate=null;
     $scope.director_gross=null;
     $scope.production_detail=null;
@@ -468,7 +468,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
     $scope.getdata=function(){
        // var backend_url="http://127.0.0.1:8000/";
-       var backend_url="http://51.145.25.169:8001/";
+       var backend_url="http://51.145.42.8:8001/";
 
        //get director_rate
        $http.get(backend_url+"director_r/"+$scope.director).success(function (response) {
@@ -1031,10 +1031,13 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 .controller('CountryCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
    // var country_list_url="http://127.0.0.1:8000/country_list";
-   var country_list_url="http://51.145.25.169:8001/country_list";
+   var country_list_url="http://51.145.42.8:8001/country_list";
    $scope.get_country_list=function(){
        $http.get(country_list_url).success(function (response) {
             console.log(response); 
+            for (var i =0; i<response.length; i++) {
+              response[i].rating=response[i].rating.toFixed(2);
+            }
             $scope.data=response;  
             $scope.tableParams=new NgTableParams({page: 1,            // show first page
             count: 25},{counts:[25,50],dataset: $scope.data}); 
@@ -1045,10 +1048,13 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 .controller('ActorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
    // var actor_list_url="http://127.0.0.1:8000/actor_list";
-   var actor_list_url="http://51.145.25.169:8001/actor_list";
+   var actor_list_url="http://51.145.42.8:8001/actor_list";
    $scope.get_actor_list=function(){
        $http.get(actor_list_url).success(function (response) {
             console.log(response); 
+            for (var i =0; i<response.length; i++) {
+              response[i].ave_rating=response[i].ave_rating.toFixed(2);
+            }
             $scope.data=response;  
             $scope.tableParams=new NgTableParams({page: 1,            // show first page
             count: 25},{counts:[25,50],dataset: $scope.data}); 
@@ -1059,11 +1065,15 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 .controller('LanguageCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
    // var language_list_url="http://127.0.0.1:8000/language_list";
-   var language_list_url="http://51.145.25.169:8001/language_list";
+   var language_list_url="http://51.145.42.8:8001/language_list";
    $scope.get_language_list=function(){
        $http.get(language_list_url).success(function (response) {
-            console.log(response); 
-            $scope.data=response;  
+            // console.log(response.length); 
+            // $scope.data=response;  
+            for (var i =0; i<response.length; i++) {
+              response[i].rating=response[i].rating.toFixed(2);
+            }
+            $scope.data=response;
             $scope.tableParams= new NgTableParams({page: 1,            // show first page
             count: 25},{counts:[25,50],dataset: $scope.data}); 
       });
@@ -1074,7 +1084,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 
 .controller('DirectorCtrl', ['$scope','$http','NgTableParams',function ($scope,$http,NgTableParams) {
    // var director_list_url="http://127.0.0.1:8000/director_list";
-   var director_list_url="http://51.145.25.169:8001/director_list";
+   var director_list_url="http://51.145.42.8:8001/director_list";
 
    $scope.get_director_list=function(){
        $http.get(director_list_url).success(function (response) {
@@ -1091,7 +1101,7 @@ angular.module('IMDB.controllers', ['ngTable','chart.js','angular-maps','IMDB.se
 // For testing purpose only
 .controller('TestCtrl', ['$scope','$http',function ($scope,$http) {
    // var local_url="http://127.0.0.1:8000/language_list";
-   var local_url="http://51.145.25.169:8001/language_list";
+   var local_url="http://51.145.42.8:8001/language_list";
    $scope.list=null;
    $scope.test=function(){
        $http.get(local_url).success(function (response) {

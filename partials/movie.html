@@ -10,7 +10,7 @@
 </div>  
 <br>
 
-<div class="container">
+<div class="container back-basic-info">
 
 <div class="row">
 <div class="col-lg-4">
@@ -158,7 +158,7 @@
     <div class="col-lg-4" ng-show="show_d">
         <p><label>Director</label>: {{director_rate.director}}</p>
         <p><label>Number of movies directored</label>: {{director_gross.number}}</p>
-        <p><label>Box_office accumulated</label>: ${{director_gross.gross_box_office}}</p>
+        <p><label>Box_office accumulated</label>: ${{(director_gross.gross_box_office/1000000).toFixed(2)}} million</p>
         <p><label>Rank based on gross </label>: {{director_gross.rank}} out of 4069 directors</p>
         <p><label>Average rating of his movies</label>: {{director_rate.ave_rating}}/10</p>
         <p><label>Rank based on rating </label>: {{director_rate.rank}} out of 4069 directors</p>
@@ -200,13 +200,13 @@
 <div class="row" >
     <div class="col-lg-5">
         <label>Number of movies produced</label>
-        <canvas id="line" chart-colors='colors' class="chart chart-line" chart-data="year_production_number" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        <canvas id="line" chart-colors='colors' class="chart chart-bar" chart-data="year_production_number" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
         </canvas>
     </div>
 
     <div class="col-lg-5">
         <label>Sum of box office gained by {{production_detail.production}} in the past (in $million)</label>
-        <canvas id="line" chart-colors='colors' class="chart chart-line" chart-data="year_production_gross" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
+        <canvas id="line" chart-colors='colors' class="chart chart-bar" chart-data="year_production_gross" chart-labels="year_list"  chart-click="onClick" chart-options="options" chart-dataset-override="datasetOverride" >
         </canvas>
     </div>
 
@@ -229,9 +229,9 @@
     <span class="border border-primary">
         <p>Production: {{production_detail.production}} </p>
         <p>Number of movies: {{production_detail.number}}</p>
-        <p>Average gross of its movies: {{production_detail.ave_gross}}</p>
+        <p>Average gross of its movies: ${{(production_detail.ave_gross/1000000).toFixed(2)}} million</p>
         <p>Average raitng of its movies: {{f_rate}}/10</p>
-        <p>Total gross: ${{production_detail.gross_box_office}}</p>
+        <p>Total gross: ${{(production_detail.gross_box_office/1000000).toFixed(2)}} million</p>
     </span>
     </div>
 
@@ -269,8 +269,8 @@
     <div class="col-lg-4" ng-show="a1_flag">
         <p>Actor1: {{actor_rdetail.actor}}</p>
         <p>Number of movies: {{actor_rdetail.number}}</p>
-        <p>Average rating of movies: {{actor_rdetail.ave_rating}}</p>
-        <p>Gross_box_office: {{actor_rdetail.gross_box_office}}</p>
+        <p>Average rating of movies: {{actor_rdetail.ave_rating.toFixed(2)}}</p>
+        <p>Gross_box_office: ${{((actor_rdetail.gross_box_office)/1000000).toFixed(2)}} million</p>
         <p>Rank based on rating: {{actor_rdetail.rank}}</p>
         <p>Rank based on gross: {{actor_gdetail.rank}}</p>     
     </div> 
@@ -279,17 +279,17 @@
     <div class="col-lg-4" ng-show="a2_flag">
         <p>Actor2: {{actor2_rdetail.actor}}</p>
         <p>Number of movies: {{actor2_rdetail.number}}</p>
-        <p>Average rating of movies: {{actor2_rdetail.ave_rating}}</p>
-        <p>Gross_box_office: {{actor2_rdetail.gross_box_office}}</p>   
-        <p>Average box office: {{actor2_rdetail.ave_gross}}</p>
+        <p>Average rating of movies: {{actor2_rdetail.ave_rating.toFixed(2)}}</p>
+        <p>Gross_box_office: ${{((actor2_rdetail.gross_box_office)/1000000).toFixed(2)}} million</p>   
+        <p>Average box office: ${{((actor2_rdetail.ave_gross)/1000000).toFixed(2)}} million</p>
     </div> 
     <!-- <div class="col-lg-2" ng-show="!a2_flag"><label>No info about actor2</label></div> -->
     <div class="col-lg-4" ng-show="a3_flag">
         <p>Actor3: {{actor3_rdetail.actor}}</p>
         <p>Number of movies: {{actor3_rdetail.number}}</p>
-        <p>Average rating of movies: {{actor3_rdetail.ave_rating}}</p>
-        <p>Gross_box_office: {{actor3_rdetail.gross_box_office}}</p>   
-        <p>Average box office: {{actor3_rdetail.ave_gross}}</p>
+        <p>Average rating of movies: {{actor3_rdetail.ave_rating.toFixed(2)}}</p>
+        <p>Gross_box_office: ${{((actor3_rdetail.gross_box_office)/1000000).toFixed(2)}} million</p>   
+        <p>Average box office: ${{((actor3_rdetail.ave_gross)/1000000).toFixed(2)}} million</p>
     </div> 
     <!-- <div class="col-lg-2" ng-show="!a3_flag">No info about actor3</div> -->
     </div>
