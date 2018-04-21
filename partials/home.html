@@ -1,33 +1,6 @@
 
 <div id="myCarousel" class="carousel slide">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Specialists');"></div>
-            <div class="carousel-caption">
-                <h1>Reduce costs of finishing operations by 65%</h1>
-            </div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Wordlwide');"></div>
-            <div class="carousel-caption">
-                <h1>International Buyer Financing Available</h1>
-            </div>
-        </div>
-        <div class="item">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Since 1910');"></div>
-            <div class="carousel-caption">
-                <h1>Family Owned for Four Generations</h1>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Controls -->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -39,115 +12,210 @@
 </div>
 
 
+<div class="cover">
+    <div class="container text-center">
 
-<div class="section-colored text-center">
+      <div class="col-md-12">
+        <h1>
+            IMDB Data Analysis
+        </h1>
+
+        <!-- <p class="tagline">
+          This is a powerful theme with some great features that you can use in your future projects.
+        </p> -->
+        <br>
+        <!-- <a class="btn1 btn-full" href="#about3123">Discover Movies Now</a> -->
+        <p>Scroll down to discover more</p>
+      </div>
+    </div>
+
+</div>
+
+<!-- <div class="section-colored text-center">
 
     <div class="container">
 
         <div class="row">
             <div class="col-md-12">
                 <h2>IMDB analysis </h2>
-                <p>Providing users with huge amount of movie-related data and analysis</p>
+                <p>Huge amount of movie-related data and analysis</p>
                 <hr>
             </div>
-        </div>
-        <!-- /.row -->
+        </div> -->
+<!--         /.row
 
-    </div>
-    <!-- /.container -->
+    </div> -->
+    <!-- /.container
 
-</div>
+</div> -->
 <!-- /.section-colored -->
+
 <br>
 <br>
 <br>
+
+<section class="about" id="about">
+    <div class="container text-center">
+      <h2>
+          About This App
+        </h2>
+
+      <div class="row stats-row">
+        <div class="stats-col text-center col-md-3 col-sm-6">
+          <div class="circle">
+            <span class="stats-no" data-toggle="counter-up">45000</span> Contains more than 45,000 movies
+          </div>
+        </div>
+
+        <div class="stats-col text-center col-md-3 col-sm-6">
+          <div class="circle">
+            <span class="stats-no" data-toggle="counter-up">3266</span> Contains more than 3000 actors
+          </div>
+        </div>
+
+        <div class="stats-col text-center col-md-3 col-sm-6">
+          <div class="circle">
+            <span class="stats-no" data-toggle="counter-up">4069</span> Contains more than 4000 directors
+          </div>
+        </div>
+
+        <div class="stats-col text-center col-md-3 col-sm-6">
+          <div class="circle">
+            <span class="stats-no" data-toggle="counter-up">51</span> Contains more than 50 countries
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<br>
+<br>
+<br>
+
+
 
 
 <!-- 主页电影搜索框 -->
-<div class="section">
+<div class="section search_box_cover" >
+<div class="container text-center"><h1>Discover the movie you like</h1></div>
+<br>
 <div class="container">
     <div class="row">
 
     <div class="col-md-4"></div>
 
-    <div class="col-md-4">
+    <div class="col-md-4" >
         <div class="input-group">
 
-        <div class="input-group-btn">
+        <div class="input-group-btn cust-color">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{selectedType}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li ng-repeat="a in types"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>       
+          <li ng-repeat="a in types"><a ng-click="dropboxitemselected(a)" >{{a}}</a></li>       
         </ul>
         </div>
         <input type="text" class="form-control" aria-label="Text input with dropdown button" ng-model="movie_input">
 
         <div class="input-group-btn"><button type="button" class="btn btn-primary" ng-click="submit_search()">Submit</button></div>
-
+        <!-- class="btn btn-primary" -->
         </div>
-
-      </div>        
-        
+      </div>              
     </div>
-
     <div class="col-md-4"></div>
 </div>
+
+
+
+
 </div>
 </div>
 
+<br>
+<br>
 
 
 
-<div class="section">
+<div class="container" >
+    <div class="row">
+        <nav class="navbar navbar-default" role="navigation">
+        <ul class="nav navbar-nav">   
+            <li><a href="" ng-click="get_country()">Country</a></li>
+            <li><a href="" ng-click="get_month_list()">Month</a></li>
+        </ul>
+</nav>
+    </div>
+</div>
 
+
+
+<!-- 画图 Monthly_based analysis-->
+<div class="section" ng-show="month_show">
     <div class="container">
+    <div class="row"><label>Movie Data analysis based on month (hang your mouse over on each graph)</label></div>
+    <br>
+    <div class="row">
+    <div class="col-md-6">
+    <label> Total gross ($)<br/><br/></label>
+        <canvas id="bar" class="chart chart-bar" chart-data="m1" chart-labels="m_labels" chart-series="m_series">
+        </canvas>
+    
+    </div>
+    <div class="col-md-6">
+    <label> Average gross<br/><br/></label>
+        <canvas id="bar" class="chart chart-bar" chart-data="m2" chart-labels="m_labels" chart-series="m_series">
+        </canvas>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-6">
+    <label> Number of movies<br/></label>
+            <canvas id="pie" class="chart chart-pie"
+  chart-data="m3" chart-labels="m_labels" chart-options="options">
+            </canvas>
+    </div>
 
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h2>IMDB based movie data analysis</h2>
-                <hr>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-            <div class="col-md-4 col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
-                </a>
-            </div>
-        </div>
-        <!-- /.row -->
+    <div class="col-md-6">
+    <label> Rating of movies<br/></label>
+            <canvas id="line" class="chart chart-line" chart-data="m4" chart-labels="m_labels" chart-series="m_series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+    </div>
 
     </div>
-    <!-- /.container -->
-    <button ></button>
-
+    </div>
 </div>
-<!-- /.section -->
 
+<!-- Show the world map based on number of movies produced by each country -->
+<div class="section" ng-show="country_show" data-ng-init="get_country()">
+    <div class="container" >
+        <label>Movie Distribution (hang your mouse over to view the number for each country)</label>
+
+        <div class="row">
+        <div class="col-md-2"><img src="../sort/2.png" height="30" width="30"> <100 </div>
+        <div class="col-md-2"><img src="../sort/1.png" height="30" width="30"> <1000 </div>
+        <div class="col-md-2"><img src="../sort/3.png" height="30" width="30"> <10000 </div>
+        <div class="col-md-2"><img src="../sort/4.png" height="30" width="30"> <100000 </div>
+
+            
+        </div>
+        <br>
+
+        <div class="row">
+        <div class="col-md-12">
+            <world-map world-data="worldData1" value-range="valueRange" color-range="colorRange" dimension="dimension" map-width="mapWidth" descriptive-text="descriptiveText" country-fill-color="countryFillColor" country-border-color="countryBorderColor"></world-map>
+        </div>
+        </div>
+    </div>
+</div>
+         
+
+
+
+
+<!-- <button ng-click="readCSV(2013)">Test</button>
+<button ng-click="get_month_list()">Test1</button>
+ -->
 
 
 

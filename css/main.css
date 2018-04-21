@@ -13,6 +13,106 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
+.search_box_cover{
+      background-image: url(../img/parallax-bg.jpg);
+      background-size: cover;
+      color: #fff;
+      width: 100%;
+      height: 50vh;
+}
+.cover {
+      display: table;
+      position: relative;
+      background-image: url(../img/cover.jpg);
+      background-size: cover;
+      padding: 150px 0;
+      color: #fff;
+      width: 100%;
+      height: 100vh;
+}
+.cover:after {
+  content: '';
+  z-index: 0;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.65);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.cover .container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/*按钮*/
+.btn1 {
+  background-color: #199EB8;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  color: #fff;
+  padding: 15px 45px;
+  border-radius: 50px;
+}
+
+.btn1:hover {
+  background-color: #E04F00;
+  color: #fff;
+}
+
+.btn1:focus {
+  color: #fff;
+}
+
+.btn-ghost {
+  border: 3px solid #fff;
+  background-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: #fff;
+  color: #199EB8;
+}
+
+.stats-row {
+  margin-top: 65px;
+}
+
+.stats-col .circle {
+  display: inline-block;
+  width: 160px;
+  height: 160px;
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #666;
+  border: 6px solid #199EB8;
+  border-radius: 50%;
+  padding: 55px 25px 0 25px;
+  position: relative;
+}
+
+.stats-col .circle .stats-no {
+  color: #fff;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  top: -25px;
+  right: -15px;
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  background-color: #E04F00;
+  position: absolute;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+
+
 
 .dropdown {
     cursor:pointer;
@@ -120,8 +220,27 @@ body {
 }
 
 .s_div {
-    height: 300px;
+    height: 1000px;
 }
+
+.cust-color{
+    color: #d14836;
+}
+
+
+/*.back-basic-info{
+    background-image: url(../img/back1.jpg);
+    background-size: cover;
+    color: #fff;
+    width: 90%;
+    height: 100vh;
+
+}*/
+
+
+
+
+
 
 /* Footer Styles */
 footer {
