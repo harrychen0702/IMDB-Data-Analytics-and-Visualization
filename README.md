@@ -5,3 +5,6 @@ To run this web app on your computer
 4. To disable this : If you are using Chrome: Run “ open -a Google\ Chrome --args --disable-web-security --user-data-dir” in your terminal and start the chrome again.
 5. cd to the directory
 6. run http-server -o. 
+
+
+The backend API repository can be find here: https://github.com/harrychen0702/Backend-System
